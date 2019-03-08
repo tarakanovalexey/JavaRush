@@ -21,7 +21,6 @@ public class Solution {
     }
 
     public static void main(String[] args) throws ParseException {
-        allPeople.add(new Person.createMale(1, "2"));
         int id;
         String name;
         String sex;
@@ -36,7 +35,7 @@ public class Solution {
                 sex = args[i+1];
                 date = bd.parse(args[i+2]);
                 if (sex.equals("MALE")) {
-                    allPeople.add(p = new Person.createMale(name, date));
+                    allPeople.add(p = createMale(name, date));
                 }
             }
         }
