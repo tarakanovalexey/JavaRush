@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import static com.javarush.task.task17.task1711.Person.createFemale;
 import static com.javarush.task.task17.task1711.Person.createMale;
 
 /* 
@@ -27,20 +29,79 @@ public class Solution {
         SimpleDateFormat bd = new SimpleDateFormat("dd/MM/yyyy");
         Date date;
         Person p;
-        if (args[0].equals("-c"))
-        {
-            for (int i = 1; i <args.length; i+=3)
-            {
-                name = args[i];
-                sex = args[i+1];
-                date = bd.parse(args[i+2]);
-                if (sex.equals("MALE")) {
-                    allPeople.add(p = createMale(name, date));
+
+        switch (args[0]) {
+
+            case "-c":{
+
+                for (int i = 1; i <args.length; i+=3)
+                {
+                    name = args[i];
+                    sex = args[i+1];
+                    date = bd.parse(args[i+2]);
+                    synchronized (allPeople) {
+                        if (sex.equals("м")) {
+                            allPeople.add(p = createMale(name, date));
+                            System.out.println(allPeople.indexOf(p));
+                        }
+                        else {
+                            allPeople.add(p = createFemale(name, date));
+                            System.out.println(allPeople.indexOf(p));
+                        }
+                    }
                 }
+                break;
+
             }
+
+            case "-u":{
+                for (int i = 1; i <args.length; i+=4)
+                {
+                    id = Integer.parseInt(args[i]);
+                    name = args[i+1];
+                    sex = args[i+2];
+                    date = bd.parse(args[i+3]);
+                    synchronized (allPeople) {
+                        if (sex.equals("м")) {
+                            allPeople.set(id, p = createMale(name, date));
+                        }
+                        else {
+                            allPeople.set(id, p = createFemale(name, date));
+                        }
+                    }
+                }
+                break;
+            }
+
+            case "-d":{
+                for (int i = 1; i <args.length; i++)
+                {
+                    id = Integer.parseInt(args[i]);
+                    synchronized (allPeople) {
+                        allPeople.get(id).setName(null);
+                        allPeople.get(id).setSex(null);
+                        allPeople.get(id).setBirthDate(null);
+                    }
+                }
+                break;
+            }
+
+            case "-i":{
+                SimpleDateFormat bd1 = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+                for (int i = 1; i <args.length; i++)
+                {
+                    id = Integer.parseInt(args[i]);
+                    synchronized (allPeople) {
+                    name = allPeople.get(id).getName();
+                    if (allPeople.get(id).getSex().equals(Sex.MALE))
+                        sex = "м";
+                    else sex = "ж";
+                        System.out.println(name+" "+sex+" "+bd1.format(allPeople.get(id).getBirthDate()));
+                    }
+                }
+                break;
+            }
+
         }
-        if (args[0].equals("-u"));
-        if (args[0].equals("-d"));
-        if (args[0].equals("-i"));
     }
 }
