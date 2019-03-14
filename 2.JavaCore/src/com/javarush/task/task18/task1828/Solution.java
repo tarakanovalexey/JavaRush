@@ -1,7 +1,7 @@
-package com.javarush.task.task18.task1827;
+package com.javarush.task.task18.task1828;
 
 /* 
-Прайсы
+Прайсы 2
 */
 
 import java.io.*;
@@ -9,11 +9,13 @@ import java.io.*;
 public class Solution {
 
     public static void main(String[] args) throws Exception {
+
+        BufferedReader R = new BufferedReader(new InputStreamReader(System.in));
+        String file = R.readLine();
+        R.close();
+
         if (args.length < 1){ }
-        else {
-            BufferedReader R = new BufferedReader(new InputStreamReader(System.in));
-            String file = R.readLine();
-            R.close();
+        else if (args[1].equals("-d")) {
 
             BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String line ="";
@@ -21,12 +23,12 @@ public class Solution {
             while(input.ready()) {
                 line = input.readLine().substring(0, 8);
                 line = line.replace(" ", "");
-                    if (Integer.parseInt(line) >= max) {
-                        max = Integer.parseInt(line) + 1;
-                    }
+                if (Integer.parseInt(line) >= max) {
+                    max = Integer.parseInt(line) + 1;
+                }
             }
             input.close();
-            Formater f = new Formater();
+            com.javarush.task.task18.task1827.Solution.Formater f = new com.javarush.task.task18.task1827.Solution.Formater();
             String id = f.method(max+"", 8);
             String productName = f.method(args[1], 30);
             String price = f.method(args[2], 8);
@@ -37,6 +39,8 @@ public class Solution {
             output.newLine();
             output.write(wout);
             output.close();
+        } else {
+
         }
     }
 
