@@ -5,64 +5,38 @@ package com.javarush.task.task18.task1828;
 */
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Solution {
-
-    public static void main(String[] args) throws Exception {
-
+    public static void main(String[] args) throws IOException {
         BufferedReader R = new BufferedReader(new InputStreamReader(System.in));
         String file = R.readLine();
-        R.close();
+        ArrayList<String> list = new ArrayList<>();
+        BufferedReader input = new BufferedReader(new FileReader(file));
+        while (input.ready()){
+            list.add(input.readLine());
+        }
+        input.close();
 
-        if (args.length < 1){ }
-        else if (args[1].equals("-d")) {
+        if(args[0].equals("-u")){
 
-            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            String line ="";
-            int max = 0;
-            while(input.ready()) {
-                line = input.readLine().substring(0, 8);
-                line = line.replace(" ", "");
-                if (Integer.parseInt(line) >= max) {
-                    max = Integer.parseInt(line) + 1;
-                }
-            }
-            input.close();
-            com.javarush.task.task18.task1827.Solution.Formater f = new com.javarush.task.task18.task1827.Solution.Formater();
-            String id = f.method(max+"", 8);
-            String productName = f.method(args[1], 30);
-            String price = f.method(args[2], 8);
-            String quantity = f.method(args[3], 4);
-            String wout = id+productName+price+quantity;
+            String update = String.format("%-8s%-30s%-8s%-4s", args[1].trim(), args[2].trim(), args[3].trim(), args[4].trim());
+            for (int i = 0 ; i < list.size(); i++)
+                if (list.get(i).substring(0, 8).trim().equals(args[1]))
+                    list.set(i, update);
+        }
 
-            BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "windows-1251"));
+        if(args[0].equals("-d")){
+            for (int i = 0 ; i < list.size(); i++)
+                if (list.get(i).substring(0, 8).trim().equals(args[1]))
+                    list.remove(i);
+        }
+
+        BufferedWriter output = new BufferedWriter(new FileWriter(file));
+        for (int i = 0; i < list.size(); i++) {
+            output.write(list.get(i));
             output.newLine();
-            output.write(wout);
-            output.close();
-        } else {
-
         }
+        output.close();
     }
-
-    public static class Formater{
-        int y;
-        char[] arr = new char[y];
-        public String method(String x, int y){
-            this.y = y;
-            String res = "";
-            char[] arr = new char[y];
-            for (int i = 0 ; i < arr.length; i++)
-                try {
-                    arr[i] = x.toCharArray()[i];
-                }
-                catch (IndexOutOfBoundsException e) {
-                    arr[i] = ' ';
-                }
-            for (int i = 0; i < arr.length; i++)
-                res += arr[i];
-            return res;
-        }
-    }
-
-
 }
