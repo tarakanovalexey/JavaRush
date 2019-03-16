@@ -20,33 +20,30 @@ public class Solution {
     }
 
     public static class IncomeDataAdapter implements Customer, Contact {
-        private IncomeData incomeData;
-        IncomeDataAdapter(IncomeData incomeData){
-            this.incomeData = incomeData;
+        private IncomeData data;
+        IncomeDataAdapter(IncomeData data){
+            this.data = data;
         }
 
         @Override
         public String getCompanyName() {
-            return incomeData.getCompany();
+            return data.getCompany();
         }
 
         @Override
         public String getCountryName() {
-            return countries.get(incomeData.getCountryCode());
+            return countries.get(data.getCountryCode());
         }
 
         @Override
         public String getName() {
-            return null;
+            return data.getContactLastName()+", "+data.getContactFirstName();
         }
 
         @Override
         public String getPhoneNumber() {
-            String countryc = incomeData.getCountryPhoneCode()+"";
-            String code = (incomeData.getPhoneNumber()+"");
-            String code3 = "";
-            String code7 = "";
-            return "+"+;
+            String c = String.format("%010d", data.getPhoneNumber());
+            return String.format("+%d(%3s)%3s-%2s-%2s",data.getCountryPhoneCode(), c.substring(0, 3), c.substring(3, 6), c.substring(6, 8), c.substring(8, 10));
         }
     }
 
