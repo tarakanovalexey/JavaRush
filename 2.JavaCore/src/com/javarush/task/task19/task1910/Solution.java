@@ -1,7 +1,7 @@
-package com.javarush.task.task19.task1909;
+package com.javarush.task.task19.task1910;
 
 /* 
-Замена знаков
+Пунктуация
 */
 
 import java.io.*;
@@ -17,7 +17,7 @@ public class Solution {
         while (input.ready())
             text += input.readLine();
         input.close();
-        text = text.replaceAll("\\.","!");
+        text = text.replaceAll("\\p{Punct}","");
         BufferedWriter output = new BufferedWriter(new FileWriter(file2));
         output.write(text);
         output.close();
