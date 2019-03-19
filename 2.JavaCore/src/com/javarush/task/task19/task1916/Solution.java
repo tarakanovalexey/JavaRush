@@ -1,6 +1,7 @@
 package com.javarush.task.task19.task1916;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -17,6 +18,17 @@ public class Solution {
         BufferedReader R = new BufferedReader(new InputStreamReader(System.in));
         String file1 = R.readLine();
         String file2 = R.readLine();
+        R.close();
+        BufferedReader input1 = new BufferedReader(new FileReader(file1));
+        BufferedReader input2 = new BufferedReader(new FileReader(file2));
+
+        while (input1.ready())
+
+        input1.close();
+        while (input2.ready())
+
+        input2.close();
+
     }
 
 
