@@ -13,8 +13,8 @@ public class Solution {
         //исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
             File your_file_name = File.createTempFile("your_file_name", null);
-            OutputStream outputStream = new FileOutputStream(your_file_name);
-            InputStream inputStream = new FileInputStream(your_file_name);
+            OutputStream outputStream = new FileOutputStream("D:\\text1.txt");
+            InputStream inputStream = new FileInputStream("D:\\text1.txt");
 
             Human ivanov = new Human("Ivanov", new Asset("home", 999_999.99), new Asset("car", 2999.99));
             ivanov.save(outputStream);
