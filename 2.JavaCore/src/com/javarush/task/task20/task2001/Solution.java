@@ -12,9 +12,9 @@ public class Solution {
     public static void main(String[] args) {
         //исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
-            File your_file_name = File.createTempFile("your_file_name", null);
-            OutputStream outputStream = new FileOutputStream("D:\\text1.txt");
-            InputStream inputStream = new FileInputStream("D:\\text1.txt");
+            File your_file_name = File.createTempFile("file.bin", null);
+            OutputStream outputStream = new FileOutputStream(your_file_name);
+            InputStream inputStream = new FileInputStream(your_file_name);
 
             Human ivanov = new Human("Ivanov", new Asset("home", 999_999.99), new Asset("car", 2999.99));
             ivanov.save(outputStream);
@@ -24,6 +24,7 @@ public class Solution {
             somePerson.load(inputStream);
             inputStream.close();
             //check here that ivanov equals to somePerson - проверьте тут, что ivanov и somePerson равны
+            System.out.println(ivanov.equals(somePerson));
 
         } catch (IOException e) {
             //e.printStackTrace();
@@ -68,10 +69,33 @@ public class Solution {
 
         public void save(OutputStream outputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            PrintWriter printWriter = new PrintWriter(outputStream);
+            String objectExists = assets.isEmpty() ? "no" : "yes";
+            printWriter.write(objectExists);
+            printWriter.write(System.lineSeparator());
+            printWriter.write(name);
+            printWriter.write(System.lineSeparator());
+            if (objectExists.equals("yes")){
+                for (Asset each : assets) {
+                    printWriter.write(each.getName());
+                    printWriter.write(System.lineSeparator());
+                    printWriter.write(Double.toString(each.getPrice()));
+                    printWriter.write(System.lineSeparator());
+                }
+            }
+            printWriter.flush();
         }
 
         public void load(InputStream inputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            BufferedReader printReader = new BufferedReader(new InputStreamReader(inputStream));
+            String text = printReader.readLine();
+            name = printReader.readLine();
+            if (text.equals("yes")) {
+                while (printReader.ready())
+                    assets.add(assets.size(), new Asset(printReader.readLine(), Double.parseDouble(printReader.readLine())));
+            }
+
         }
     }
 }
