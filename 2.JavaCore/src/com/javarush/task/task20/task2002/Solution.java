@@ -17,7 +17,7 @@ public class Solution {
         //you can find your_file_name.tmp in your TMP directory or adjust outputStream/inputStream according to your file's actual location
         //вы можете найти your_file_name.tmp в папке TMP или исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
-            File yourFile = File.createTempFile("file.bin", null);
+            File yourFile = File.createTempFile("your_file_name.tmp", null);
             OutputStream outputStream = new FileOutputStream(yourFile);
             InputStream inputStream = new FileInputStream(yourFile);
 
