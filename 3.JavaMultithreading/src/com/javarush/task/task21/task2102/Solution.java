@@ -17,7 +17,9 @@ public class Solution {
     }
 
     public static boolean isModifierSet(int allModifiers, int specificModifier) {
-        return false;
+        if (Modifier.toString(allModifiers).contains(Modifier.toString(specificModifier)))
+        return true;
+        else return false;
     }
 
     private static Method getMainMethod() {
