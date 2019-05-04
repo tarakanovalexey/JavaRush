@@ -29,6 +29,20 @@ public class Solution {
     class Task {
     }
 
+    private class TaskDataProvider implements DbDataProvider<Task>{
+        @Override
+        public void refreshAllData(Map criteria) {
+           tasks = MockDB.getFakeTasks(criteria);
+        }
+    }
+
+    private class NameDataProvider implements DbDataProvider<String>{
+        @Override
+        public void refreshAllData(Map criteria) {
+            names = MockDB.getFakeNames(criteria);
+        }
+    }
+
     public static void main(String[] args) {
 
     }
