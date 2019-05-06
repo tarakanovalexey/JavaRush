@@ -11,18 +11,30 @@ public class Solution {
 
     private int countItems;
 
+
+
     public Iterator getIterator(final String name) {
         class LocalIterator implements Iterator {
-            public LocalIterator() {
+            @Override
+            public Iterator next() {
+                return new LocalIterator();
+            }
+        }
+        return new LocalIterator(){
+            {
                 countItems++;
                 System.out.println(name + " item " + countItems);
             }
 
             public Iterator next() {
-                return new LocalIterator();
+                return new LocalIterator(){
+                    {
+                        countItems++;
+                        System.out.println(name + " item " + countItems);
+                    }
+                };
             }
-        }
-        return new LocalIterator();
+        };
     }
 
     public static void main(String[] args) {
