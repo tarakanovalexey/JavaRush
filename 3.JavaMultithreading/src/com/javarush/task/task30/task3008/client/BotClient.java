@@ -32,7 +32,7 @@ public class BotClient extends Client {
 
         @Override
         protected void clientMainLoop() throws IOException, ClassNotFoundException {
-            sendTextMessage("Привет чатику. Я бот. Понимаю команды: дата, день, месяц, год, время, час, минуты, секунды.");
+            sendTextMessage("РџСЂРёРІРµС‚ С‡Р°С‚РёРєСѓ. РЇ Р±РѕС‚. РџРѕРЅРёРјР°СЋ РєРѕРјР°РЅРґС‹: РґР°С‚Р°, РґРµРЅСЊ, РјРµСЃСЏС†, РіРѕРґ, РІСЂРµРјСЏ, С‡Р°СЃ, РјРёРЅСѓС‚С‹, СЃРµРєСѓРЅРґС‹.");
             super.clientMainLoop();
         }
 
@@ -43,16 +43,16 @@ public class BotClient extends Client {
                 String userName = message.split(":")[0].trim();
                 String userMessage = message.split(":")[1].trim();
                 Map<String, String> formats = new HashMap<>();
-                formats.put("дата", "d.MM.YYYY");
-                formats.put("день", "d");
-                formats.put("месяц", "MMMM");
-                formats.put("год", "YYYY");
-                formats.put("время", "H:mm:ss");
-                formats.put("час", "H");
-                formats.put("минуты", "m");
-                formats.put("секунды", "s");
+                formats.put("РґР°С‚Р°", "d.MM.YYYY");
+                formats.put("РґРµРЅСЊ", "d");
+                formats.put("РјРµСЃСЏС†", "MMMM");
+                formats.put("РіРѕРґ", "YYYY");
+                formats.put("РІСЂРµРјСЏ", "H:mm:ss");
+                formats.put("С‡Р°СЃ", "H");
+                formats.put("РјРёРЅСѓС‚С‹", "m");
+                formats.put("СЃРµРєСѓРЅРґС‹", "s");
                 formats.keySet().stream().filter(usMsg -> usMsg.equals(userMessage))
-                        .forEach(s -> sendTextMessage(String.format("Информация для %s: %s",
+                        .forEach(s -> sendTextMessage(String.format("РРЅС„РѕСЂРјР°С†РёСЏ РґР»СЏ %s: %s",
                                 userName, new SimpleDateFormat(formats.get(s)).format(Calendar.getInstance().getTime())
                         )));
             }

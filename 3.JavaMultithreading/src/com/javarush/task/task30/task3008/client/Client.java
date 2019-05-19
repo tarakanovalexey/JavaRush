@@ -31,7 +31,7 @@ public class Client {
                 wait();
             } catch (Exception e){
                 try {
-                    connection.send(new Message(MessageType.TEXT, "Ошибка!"));
+                    connection.send(new Message(MessageType.TEXT, "РћС€РёР±РєР°!"));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -39,8 +39,8 @@ public class Client {
         }
         if (shouldSendTextFromConsole())
         if (clientConnected)
-            sendTextMessage("Соединение установлено. Для выхода наберите команду 'exit'.");
-        else sendTextMessage("Произошла ошибка во время работы клиента. Just test");
+            sendTextMessage("РЎРѕРµРґРёРЅРµРЅРёРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ. Р”Р»СЏ РІС‹С…РѕРґР° РЅР°Р±РµСЂРёС‚Рµ РєРѕРјР°РЅРґСѓ 'exit'.");
+        else sendTextMessage("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РІРѕ РІСЂРµРјСЏ СЂР°Р±РѕС‚С‹ РєР»РёРµРЅС‚Р°. Just test");
         while (clientConnected){
             String text = ConsoleHelper.readString();
             if (text.equalsIgnoreCase("exit"))
@@ -81,10 +81,10 @@ public class Client {
             ConsoleHelper.writeMessage(message);
         }
         protected void informAboutAddingNewUser(String userName){
-            ConsoleHelper.writeMessage(userName+" присоединился к чату");
+            ConsoleHelper.writeMessage(userName+" РїСЂРёСЃРѕРµРґРёРЅРёР»СЃСЏ Рє С‡Р°С‚Сѓ");
         }
         protected void informAboutDeletingNewUser(String userName){
-            ConsoleHelper.writeMessage(userName+" покинул чат");
+            ConsoleHelper.writeMessage(userName+" РїРѕРєРёРЅСѓР» С‡Р°С‚");
         }
         protected void notifyConnectionStatusChanged(boolean clientConnected){
             Client.this.clientConnected = clientConnected;
