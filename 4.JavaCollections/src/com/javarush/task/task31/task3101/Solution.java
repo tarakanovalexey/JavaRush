@@ -1,37 +1,51 @@
 package com.javarush.task.task31.task3101;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /*
 Проход по дереву файлов
 */
 public class Solution {
-    public static void main(String[] args) {
-        File file = new File(args[0]);
-        checknrename(file);
-        File file2 = new File(args[1]);
-        getFilesLess50b(file2);
-
-    }
-
-    private static void checknrename (File file){
-        File dir = new File(file.getParent());
-        File checking = new File(dir+"allFilesContent.txt");
-        if (FileUtils.isExist(checking)) {
-            System.out.println("File exists! Deleting...");
-            FileUtils.deleteFile(checking);
-            System.out.println("Renaming current file...");
-        } else {
-            System.out.println("File doesn't exist, renaming current file...");
+    public static void main(String[] args) throws IOException {
+        //args[0] - путь к файлам
+        //args[1] - путь к файлу для записи
+        File path = new File(args[0]);
+        File resultFileAbsolutePath = new File(args[1]);
+        File newFile = new File(resultFileAbsolutePath.getParent()+"/allFilesContent.txt");
+        if (FileUtils.isExist(newFile)) {
+            FileUtils.deleteFile(newFile);
         }
-        FileUtils.renameFile(file, checking);
+        List<File> list = addFiles(path);
+        list.sort(Comparator.comparing(File::getName));
+        FileUtils.renameFile(resultFileAbsolutePath, newFile);
+        try (FileOutputStream out = new FileOutputStream(newFile, true)) {
+            for (File each : list) {
+                try (FileInputStream in = new FileInputStream(each.getAbsoluteFile())) {
+                        while (in.available() > 0) {
+                            out.write(in.read());
+                        }
+                        out.write(System.lineSeparator().getBytes());
+                        out.flush();
+                }
+            }
+        }
     }
 
-    private static List<File> getFilesLess50b (File file) {
-        List<File> arr = new ArrayList<>();
-
-        return arr;
+    public static List<File> addFiles(File file){
+        List<File> list = new ArrayList<>();
+        if (file.listFiles() != null)
+        for (File each : file.listFiles()){
+            if (each.isFile() && each.length() <= 50)
+            list.add(each);
+            else if (each.isDirectory())
+                list.addAll(addFiles(each));
+        }
+        return list;
     }
 }
