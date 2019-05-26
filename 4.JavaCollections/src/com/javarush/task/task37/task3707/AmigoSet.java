@@ -1,5 +1,8 @@
 package com.javarush.task.task37.task3707;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 
@@ -66,7 +69,42 @@ public class AmigoSet<E> extends AbstractSet implements Serializable, Cloneable,
         }
         catch (Exception e)
         {
-            throw new InternalError();
+            throw new InternalError(e);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AmigoSet)) return false;
+        if (!super.equals(o)) return false;
+        AmigoSet<?> amigoSet = (AmigoSet<?>) o;
+        return Objects.equals(map, amigoSet.map);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), map);
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(HashMapReflectionHelper.callHiddenMethod(map, "capacity"));
+        out.writeFloat(HashMapReflectionHelper.callHiddenMethod(map, "loadFactor"));
+        out.writeInt(map.keySet().size());
+        for(E e : map.keySet()) {
+            out.writeObject(e);
+        }
+    }
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        int capacity = in.readInt();
+        float loadFactor = in.readFloat();
+        map = new HashMap(capacity, loadFactor);
+        int size = in.readInt();
+        for(int i = 0; i<size; i++) {
+            map.put((E)in.readObject(), PRESENT);
         }
     }
 }
